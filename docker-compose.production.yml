@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  php:
+    volumes:
+      - ./docker/etc/php/production.ini:/etc/php/7.4/fpm/conf.d/project.ini
+
+  smtp:
+    hostname: wp-host-smtp
+    image: mwader/postfix-relay
+    command: bash -c "chown postfix:postfix /etc/postfix /etc/postfix/header_check /etc/postfix/sasl_passwd && postmap /etc/postfix/sasl_passwd && /root/run"
+    restart: always
+    volumes:
+      - ./docker/etc/postfix/sasl_passwd:/etc/postfix/sasl_passwd
+      - ./docker/etc/postfix/header_check:/etc/postfix/header_check
+    environment:
+      - TZ=${HOST_TZ}
+      - POSTFIX_relayhost=[smtp.sendgrid.net]:2525
+      - POSTFIX_smtp_tls_security_level=encrypt
+      - POSTFIX_smtp_sasl_auth_enable=yes
+      - POSTFIX_smtp_sasl_password_maps=hash:/etc/postfix/sasl_passwd
+      - POSTFIX_header_size_limit=4096000
+      - POSTFIX_message_size_limit=26214400
+      - POSTFIX_smtp_sasl_security_options=noanonymous
+      - POSTFIX_smtp_header_checks=regexp:/etc/postfix/header_check
+      - POSTFIX_inet_protocols=ipv4
+      - POSTFIX_smtp_destination_rate_delay=2s # Office365 has a rate limit of 30 messages per minute  smtp:
+    networks:
+      - wp-host-bridge

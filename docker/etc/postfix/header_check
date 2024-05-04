@@ -1,0 +1,3 @@
+if !/^From:(.*)@davydov\.in/i
+/^From:(.*)/i REPLACE From: no-replay@davydov.in
+endif

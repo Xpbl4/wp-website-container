@@ -1,0 +1,3 @@
+if !/^From:(.*)@wp\.host\.com/i
+/^From:(.*)/i REPLACE From: info@wp.host.com
+endif

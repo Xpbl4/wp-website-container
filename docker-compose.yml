@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  php:
+    hostname: wp-host-php
+    image: xpbl4/php74-fpm:latest # default image
+    restart: on-failure
+    volumes:
+      - ./:/var/www/${HOST_NAME}:delegated # project folder
+    expose:
+      - 9000
+    ports: # override
+      - ${PHP_PORT}:9000
+    environment:
+      TZ : ${HOST_TZ}
+    networks:
+      - wp-host-bridge
+
+  mysql:
+    hostname: wp-host-mysql
+    image: mysql:5.7
+    entrypoint: ['/entrypoint.sh', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+    restart: on-failure
+    expose:
+      - 3306
+    ports: # override
+      - ${MYSQL_PORT}:3306
+    volumes:
+      - ./docker/etc/mysql/mysql.conf.d:/etc/mysql/conf.d:ro
+      - ./docker/var/mysql:/var/lib/mysql
+      - ./docker/var/log/mysql:/var/log/mysql
+      - ./docker/var/initdb.d:/docker-entrypoint-initdb.d
+    environment:
+      TZ : ${HOST_TZ}
+      MYSQL_ROOT_PASSWORD : ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE : ${MYSQL_DATABASE}
+      MYSQL_USER : ${MYSQL_USER}
+      MYSQL_PASSWORD : ${MYSQL_PASSWORD}
+    networks:
+      - wp-host-bridge
+
+networks:
+  wp-host-bridge:
+    driver: bridge

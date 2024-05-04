@@ -1,0 +1,15 @@
+# phpstorm project files
+.idea
+
+# wordpress website
+/web/*
+!.gitkeep
+
+# Mac DS_Store Files
+.DS_Store
+
+# docker enviroment
+/.env
+/docker-compose.override.yml
+/docker/var/log
+/docker/var/mysql

@@ -43,8 +43,7 @@ cp docker-compose.production.yml docker-compose.override.yml
 ```
 5. Create a host `nginx` configuration file
 ```bash
-host/init.sh wp-host-website.conf /etc/nginx/sites-available/[wp-host-website]
-ln -s /etc/nginx/sites-available/[wp-host-website] /etc/nginx/sites-enabled/[wp-host-website]
+host/init.sh nginx/wp-host-website.conf [wp-host-website]
 nginx -s reload
 ```
 6. Start the Docker containers

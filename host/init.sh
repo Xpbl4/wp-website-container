@@ -26,4 +26,6 @@ export HOST_ALIAS=${HOST_ALIAS}
 export HOST_PORT=${HOST_PORT}
 export PHP_PORT=${PHP_PORT}
 
-cat ${template_file} | envsubst "$defined_envs" > ${target_file}
+#cat ${template_file} | envsubst "$defined_envs" > ${target_file}
+cat ${template_file} | envsubst "$defined_envs" > /etc/nginx/sites-available/${HOST_NAME}
+ln -s /etc/nginx/sites-available/${HOST_NAME} /etc/nginx/sites-enabled/${HOST_NAME}

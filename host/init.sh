@@ -30,9 +30,8 @@ export PHP_PORT=${PHP_PORT}
 cat ${template_file} | envsubst "$defined_envs" > /etc/nginx/sites-available/${HOST_NAME}
 ln -s /etc/nginx/sites-available/${HOST_NAME} /etc/nginx/sites-enabled/${HOST_NAME}
 
-
-find . -type f -exec chmod 664 {} +
-find . -type d -exec chmod 775 {} +
-chmod 660 wp-config.php
-chown web:www-data -R *
-chown web:web ../docker/etc/postfix/sasl_passwd
+#find . -type f -exec chmod 664 {} +
+#find . -type d -exec chmod 775 {} +
+#chmod 660 wp-config.php
+#chown web:www-data -R *
+#chown web:web ../docker/etc/postfix/sasl_passwd

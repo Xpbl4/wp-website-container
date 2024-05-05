@@ -1,3 +1,0 @@
-#Format:
-#[mail.isp.example] username:password
-#E.g.: [smtp.office365.com]:587 email@hostname.com:password

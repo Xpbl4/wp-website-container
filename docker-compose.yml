@@ -13,6 +13,8 @@ services:
       - ${PHP_PORT}:9000
     environment:
       TZ : ${HOST_TZ}
+    depends_on:
+      - mysql
     networks:
       - wp-host-bridge
 
@@ -36,6 +38,22 @@ services:
       MYSQL_DATABASE : ${MYSQL_DATABASE}
       MYSQL_USER : ${MYSQL_USER}
       MYSQL_PASSWORD : ${MYSQL_PASSWORD}
+    networks:
+      - wp-host-bridge
+
+  sphinx:
+    hostname: wp-host-sphinx
+    image: xpbl4/sphinxsearch:latest
+    restart: always
+    volumes:
+      - ./docker/etc/sphinx/sphinx.conf:/etc/sphinx/sphinx.conf
+      - ./docker/etc/sphinx/conf.d:/etc/sphinx/conf.d
+      - ./docker/var/sphinx:/var/lib/sphinx/data
+      - ./docker/var/log/sphinx:/var/log/sphinx
+    environment:
+      - TZ=${HOST_TZ}
+    depends_on:
+      - mysql
     networks:
       - wp-host-bridge
 

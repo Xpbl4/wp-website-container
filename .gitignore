@@ -11,5 +11,4 @@
 # docker enviroment
 /.env
 /docker-compose.override.yml
-/docker/var/log
-/docker/var/mysql
+/docker/var/*

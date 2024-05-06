@@ -6,7 +6,7 @@ services:
     image: xpbl4/php74-fpm:latest # default image
     restart: on-failure
     volumes:
-      - ./:/var/www/${HOST_NAME}:delegated # project folder
+      - ./web:/var/www:delegated # project folder
     expose:
       - 9000
     ports: # override

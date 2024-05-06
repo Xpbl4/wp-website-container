@@ -57,6 +57,15 @@ services:
     networks:
       - wp-host-bridge
 
+  memcached:
+    hostname: wp-host-memcache
+    image: memcached:alpine
+    restart: on-failure
+    environment:
+      - TZ=${HOST_TZ}
+    networks:
+      - wp-host-bridge
+
 networks:
   wp-host-bridge:
     driver: bridge
